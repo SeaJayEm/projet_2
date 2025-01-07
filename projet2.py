@@ -42,7 +42,6 @@ css = '''
         }
 
         section[data-testid='stSidebar'] > div {
-            height: 100%;
             width: 95px;
             position: relative;
             z-index: 1;
