@@ -23,7 +23,7 @@ Flask_RESTful==0.3.10
 matplotlib==3.9.3
 pandas==2.2.3
 seaborn==0.13.2
-streamlit==1.37.1
+streamlit==1.41.1
 streamlit_authenticator==0.4.1
 streamlit_option_menu==0.4.0
 scikit-learn==1.6.0
