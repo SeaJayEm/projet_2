@@ -9,6 +9,7 @@ from fuzzywuzzy import fuzz, process
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
 import re
 from st_on_hover_tabs import on_hover_tabs
 
@@ -93,7 +94,7 @@ def clean_text(text, lemmatizer, stop_words):
     if not isinstance(text, str):
         return ""  # Retourne une chaîne vide si le texte n'est pas une chaîne valide
     text = re.sub(r'[^a-z\\s]', ' ', text.lower())  # Convertit en minuscules et supprime les caractères spéciaux
-    tokens = nltk.word_tokenize(text)  # Tokenise le texte
+    tokens = word_tokenize(text)  # Tokenise le texte
     return ' '.join(lemmatizer.lemmatize(w) for w in tokens if w not in stop_words)  # Lemmatisation et suppression des stopwords
 
 # Préparation du dataframe en ajoutant des colonnes traitées
