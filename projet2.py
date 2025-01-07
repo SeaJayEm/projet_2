@@ -80,15 +80,26 @@ TEXT_WEIGHT = 0.95  # Poids donné à la similarité textuelle par rapport aux a
 NUM_RECOMMENDATIONS = 5  # Nombre de recommandations à afficher
 
 # Téléchargement des ressources NLTK pour la tokenisation et le traitement linguistique
-@st.cache_resource
-def download_nltk_resources():
-    nltk.download(['stopwords', 'wordnet', 'punkt'])  # Téléchargement des stopwords, lemmatizer et tokenizer
+#@st.cache_resource
+#def download_nltk_resources():
+ #   nltk.download(['stopwords', 'wordnet', 'punkt'])  # Téléchargement des stopwords, lemmatizer et tokenizer
 
 # Chargement des données depuis une URL
 @st.cache_data
 def load_data(url):
     return pd.read_csv(url)  # Charge les données au format CSV et les met en cache
-
+@st.cache_resource
+def download_nltk_resources():
+    import nltk
+    try:
+        nltk.data.find('tokenizers/punkt')
+    except LookupError:
+        nltk.download('punkt')
+    try:
+        nltk.data.find('corpora/stopwords')
+    except LookupError:
+        nltk.download('stopwords')
+        
 # Fonction pour nettoyer le texte
 def clean_text(text, lemmatizer, stop_words):
     if not isinstance(text, str):
