@@ -7,6 +7,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import MinMaxScaler
 from fuzzywuzzy import fuzz, process
 import nltk
+import os
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
@@ -88,25 +89,37 @@ NUM_RECOMMENDATIONS = 5  # Nombre de recommandations à afficher
 @st.cache_data
 def load_data(url):
     return pd.read_csv(url)  # Charge les données au format CSV et les met en cache
-@st.cache_resource
+    
 def download_nltk_resources():
-    import nltk
-    try:
-        nltk.data.find('tokenizers/punkt')
-    except LookupError:
-        nltk.download('punkt')
-    try:
-        nltk.data.find('corpora/stopwords')
-    except LookupError:
-        nltk.download('stopwords')
+    # Créer le dossier nltk_data s'il n'existe pas
+    nltk_data_dir = os.path.expanduser('~/nltk_data')
+    if not os.path.exists(nltk_data_dir):
+        os.makedirs(nltk_data_dir)
+    
+    # Liste des ressources NLTK nécessaires
+    resources = ['punkt', 'stopwords', 'wordnet']
+    
+    for resource in resources:
+        try:
+            nltk.data.find(f'tokenizers/{resource}' if resource == 'punkt' 
+                          else f'corpora/{resource}')
+        except LookupError:
+            print(f"Downloading {resource}")
+            nltk.download(resource)
         
 # Fonction pour nettoyer le texte
 def clean_text(text, lemmatizer, stop_words):
     if not isinstance(text, str):
-        return ""  # Retourne une chaîne vide si le texte n'est pas une chaîne valide
-    text = re.sub(r'[^a-z\\s]', ' ', text.lower())  # Convertit en minuscules et supprime les caractères spéciaux
-    tokens = word_tokenize(text)  # Tokenise le texte
-    return ' '.join(lemmatizer.lemmatize(w) for w in tokens if w not in stop_words)  # Lemmatisation et suppression des stopwords
+        return ""
+    text = re.sub(r'[^a-z\s]', ' ', text.lower())
+    # Utiliser sent_tokenize directement au lieu de word_tokenize
+    from nltk.tokenize import sent_tokenize, word_tokenize
+    try:
+        tokens = word_tokenize(text)
+    except LookupError:
+        # Fallback si word_tokenize échoue
+        tokens = text.split()
+    return ' '.join(lemmatizer.lemmatize(w) for w in tokens if w not in stop_words)
 
 # Préparation du dataframe en ajoutant des colonnes traitées
 def prepare_dataframe(df):
