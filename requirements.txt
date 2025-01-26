@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 pandas==2.2.3
 streamlit==1.41.1
 streamlit_authenticator==0.4.1
@@ -6,3 +7,13 @@ scikit-learn==1.6.0
 fuzzywuzzy==0.18.0
 nltk==3.9.1
 streamlit-on-Hover-tabs==1.0.1
+=======
+pandas==2.2.3
+streamlit==1.41.1
+streamlit_authenticator==0.4.1
+streamlit_option_menu==0.4.0
+scikit-learn==1.6.0
+fuzzywuzzy==0.18.0
+nltk==3.9.1
+streamlit-on-Hover-tabs==1.0.1
+>>>>>>> origin/main
