@@ -19,7 +19,7 @@ st.set_page_config(page_title="L'Antre des Cinéphiles" ,layout="wide")
 css = '''
 <style>
     html, body, [class*="css"] {
-        color: #cccccc !important;
+        color: ##F9F9F9 !important;
     }
 
     .stApp {
@@ -28,7 +28,7 @@ css = '''
         }
     
     h1, h2, h3, h4, h5, h6, p, li, span, div {
-        color: #cccccc !important;
+        color: ##F9F9F9 !important;
     }
 
     section[data-testid='stSidebar'] {
